@@ -1,0 +1,5 @@
+.DS_Store
+
+# Build artifact, regenerate with:
+#   zip -r emdashless-0.1.0.zip emdashless -x "*.DS_Store"
+emdashless-*.zip

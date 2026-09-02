@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>emdashless — torture page</title>
+    <style>
+      body { font: 15px/1.6 -apple-system, system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; }
+      h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-top: 32px; }
+      pre, code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+      .box { border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+      input, textarea { width: 100%; font: inherit; padding: 8px; box-sizing: border-box; }
+    </style>
+  </head>
+  <body>
+    <h1>The em dash — a corruption</h1>
+
+    <h2>Paired asides</h2>
+    <p>The plan — bold as it was — failed.</p>
+    <p>The plan—bold as it was—failed.</p>
+    <p>The report — which nobody read, sadly — was wrong.</p>
+
+    <h2>Single dashes</h2>
+    <p>He had one goal — victory.</p>
+    <p>He knew the truth — she was lying.</p>
+    <p>I tried — but it failed.</p>
+    <p>It was over — finally.</p>
+    <p>Three things matter — speed, security, support.</p>
+
+    <h2>Interruption and attribution</h2>
+    <p>She said "Don’t—"</p>
+    <blockquote>Be yourself; everyone else is already taken.<br />— Oscar Wilde</blockquote>
+
+    <h2>Ranges</h2>
+    <p>See pages 10—20, open Mon—Fri, shift 9:00—17:00.</p>
+
+    <h2>Inline elements around a dash</h2>
+    <p>Read the docs — <a href="#">the real ones</a> — before you ask.</p>
+    <p>Everything you need — <strong>speed</strong>.</p>
+
+    <h2>Code, which gets purged too</h2>
+    <pre>const label = "range 1—5";</pre>
+    <p>Inline <code>a — b</code> as well.</p>
+
+    <h2>Dynamically added later</h2>
+    <div id="later" class="box">waiting…</div>
+
+    <h2>Shadow DOM</h2>
+    <div id="host" class="box"></div>
+
+    <h2>Attributes, not just text</h2>
+    <p>
+      <span id="tip" title="A tooltip — with a corruption inside.">hover me</span>
+      <img id="pic" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+           alt="An image — described badly." width="1" height="1" />
+      <button id="btn" aria-label="Close — immediately">x</button>
+      <input id="submit" type="submit" value="Send — now" />
+    </p>
+
+    <h2>Type an em dash here</h2>
+    <p><input id="field" type="text" placeholder="type: He knew—she lied." /></p>
+    <p><textarea id="area" rows="3" placeholder="paste an em dash here"></textarea></p>
+    <div id="editable" class="box" contenteditable="true">editable — try typing here</div>
+
+    <script>
+      setTimeout(function () {
+        document.getElementById('later').textContent =
+          'Added after load — and it should already be clean.';
+      }, 700);
+
+      var shadow = document.getElementById('host').attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<p>Inside a shadow root — also purged.</p>';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "emdashless",
+  "version": "0.1.0",
+  "description": "The em dash is a corruption. Emdashless purges it from every page and restores punctuation that knows its place.",
+  "author": {
+    "email": "emilis.strimaitis@hostinger.com"
+  },
+  "permissions": ["storage", "clipboardWrite"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "emdashless",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "js": ["purge.js", "dom-purge.js", "content.js"]
+    }
+  ]
+}

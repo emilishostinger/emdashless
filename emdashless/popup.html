@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        width: 372px;
+        margin: 0;
+        padding: 18px;
+        background: #0a0a0a;
+        color: #fff;
+        font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      }
+      .mark {
+        display: block;
+        width: 62px;
+        height: 8px;
+        border-radius: 2px;
+        background: #fff;
+        margin: 2px 0 14px;
+      }
+      h1 {
+        margin: 0 0 14px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-top: 1px solid #1f1f1f;
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+      .row.dim {
+        opacity: 0.4;
+      }
+      .label b {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #f5f5f5;
+      }
+      .label b.off {
+        color: #6a6a6a;
+      }
+      .label small {
+        display: block;
+        margin-top: 3px;
+        color: #8b8b8b;
+        font-size: 11px;
+      }
+      .label code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+      }
+
+      /* the workbench */
+      .section {
+        border-top: 1px solid #1f1f1f;
+        margin-top: 14px;
+        padding-top: 14px;
+      }
+      .section > b {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #f5f5f5;
+      }
+      .section > small {
+        display: block;
+        margin: 3px 0 10px;
+        color: #8b8b8b;
+        font-size: 11px;
+      }
+      #editor {
+        min-height: 104px;
+        max-height: 220px;
+        overflow-y: auto;
+        padding: 10px 11px;
+        border: 1px solid #2a2a2a;
+        border-radius: 6px;
+        background: #121212;
+        font-size: 12.5px;
+        line-height: 1.5;
+        outline: none;
+      }
+      #editor:focus {
+        border-color: #4a4a4a;
+      }
+      #editor:empty::before {
+        content: attr(data-placeholder);
+        color: #5f5f5f;
+      }
+      #editor * {
+        max-width: 100%;
+      }
+      #editor a {
+        color: #8ab4ff;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      #count {
+        flex: 1;
+        font-size: 11px;
+        color: #8b8b8b;
+      }
+      #count.hit {
+        color: #f5f5f5;
+      }
+      button {
+        font: inherit;
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid #2a2a2a;
+        background: transparent;
+        color: #d0d0d0;
+        cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        border-color: #4a4a4a;
+        color: #fff;
+      }
+      button.primary {
+        background: #fff;
+        border-color: #fff;
+        color: #0a0a0a;
+        font-weight: 600;
+      }
+      button.primary:hover:not(:disabled) {
+        background: #e6e6e6;
+        color: #0a0a0a;
+      }
+      button:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      details {
+        border-top: 1px solid #1f1f1f;
+        margin-top: 14px;
+        padding-top: 12px;
+      }
+      summary {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: #8b8b8b;
+        cursor: pointer;
+      }
+      summary:hover {
+        color: #f5f5f5;
+      }
+      details .row:first-of-type {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 12px;
+      }
+
+      .switch {
+        position: relative;
+        width: 42px;
+        height: 24px;
+        flex: none;
+      }
+      .switch input {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .track {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: #2a2a2a;
+        transition: background 0.15s ease;
+        pointer-events: none;
+      }
+      .knob {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #8b8b8b;
+        transition: transform 0.15s ease, background 0.15s ease;
+        pointer-events: none;
+      }
+      .switch input:checked ~ .track {
+        background: #fff;
+      }
+      .switch input:checked ~ .knob {
+        background: #0a0a0a;
+        transform: translateX(18px);
+      }
+      .switch input:focus-visible ~ .track {
+        outline: 2px solid #5b8dff;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="mark" aria-hidden="true"></span>
+    <h1>emdashless</h1>
+
+    <div class="row" style="border-top: none; padding-top: 0; margin-top: 0">
+      <span class="label">
+        <b id="state">purging</b>
+        <small id="state-note">Every page you open, as you open it</small>
+      </span>
+      <label class="switch">
+        <input id="toggle" type="checkbox" checked aria-label="Toggle emdashless" />
+        <span class="track"></span>
+        <span class="knob"></span>
+      </label>
+    </div>
+
+    <div class="section">
+      <b>Purge before you send</b>
+      <small>Paste anything here. Formatting survives, the corruption does not.</small>
+      <div
+        id="editor"
+        contenteditable="true"
+        role="textbox"
+        aria-multiline="true"
+        aria-label="Paste text to purge"
+        data-placeholder="Paste your LLM output here"
+      ></div>
+      <div class="actions">
+        <span id="count">Nothing pasted yet</span>
+        <button id="clear" type="button" disabled>Clear</button>
+        <button id="copy" class="primary" type="button" disabled>Copy clean</button>
+      </div>
+    </div>
+
+    <details>
+      <summary>Settings</summary>
+      <div class="row" id="fields-row">
+        <span class="label">
+          <b>What you write</b>
+          <small>Purge text as you type and paste it into pages</small>
+        </span>
+        <label class="switch">
+          <input id="fields" type="checkbox" checked aria-label="Purge text you type and paste" />
+          <span class="track"></span>
+          <span class="knob"></span>
+        </label>
+      </div>
+      <div class="row" id="code-row">
+        <span class="label">
+          <b>Code blocks</b>
+          <small>Spare <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code> when off</small>
+        </span>
+        <label class="switch">
+          <input id="code" type="checkbox" checked aria-label="Purge code blocks too" />
+          <span class="track"></span>
+          <span class="knob"></span>
+        </label>
+      </div>
+    </details>
+
+    <script src="purge.js"></script>
+    <script src="dom-purge.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
